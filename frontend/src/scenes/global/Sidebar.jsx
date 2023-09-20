@@ -209,7 +209,7 @@ const Sidebar = () => {
               to="/line"
               icon={<TimelineOutlinedIcon />} //
               selected={selected}
-              setSelected={setSelected}
+              setSelected={setSelected} //
             />
             <Item
               title="Geography Chart"
