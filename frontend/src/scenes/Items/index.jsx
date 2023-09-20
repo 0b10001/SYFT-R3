@@ -1,13 +1,13 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
+import { mockDataItems } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 
-const Team = () => {
+const Items = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -70,7 +70,7 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="Items" subtitle="Managing the Items Members" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -100,10 +100,10 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid checkboxSelection rows={mockDataItems} columns={columns} />
       </Box>
     </Box>
   );
 };
 
-export default Team;
+export default Items;
