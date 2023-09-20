@@ -32,7 +32,9 @@ const Contacts = () => {
       .then((response) => {
         console.log("API Response:", response.data);
         // Assuming the API response matches the expected format
-        setContacts(response.data);
+        const apiData = response.data.data;
+
+        setContacts(apiData);
         setLoading(false);
       })
       .catch((error) => {
