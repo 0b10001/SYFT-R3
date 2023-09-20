@@ -14,7 +14,7 @@ app.use(express.json());
 const apiUrl = 'https://hackathon.syftanalytics.com/api/contacts';
 const apiKey = 'e6506999-8738-4866-a13f-2a2cfb14ba99';
 
-app.use(cors({ origin: "https://friendly-telegram-x55w4rwj77pcpxg6-3000.app.github.dev" }));
+app.use(cors({ origin: "https://friendly-telegram-x55w4rwj77pcpxg6-3000.app.github.dev" })); //
 
 // Create an Express route for the GET request
 app.get('/contacts', async (req, res) => {
