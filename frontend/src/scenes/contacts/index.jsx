@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
+import axios from "axios"; // Import Axios or your preferred HTTP library
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
@@ -11,46 +12,38 @@ const Contacts = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "is_supplier", headerName: "Is Supplier", flex: 1 },
+    { field: "is_customer", headerName: "Is Customer", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "phone", headerName: "Phone", flex: 1 },
   ];
+
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  console.log("Making API request...");
+  useEffect(() => {
+    // Make an API request here to fetch contacts
+    axios
+      .get(
+        "https://friendly-telegram-x55w4rwj77pcpxg6-3001.app.github.dev/contacts"
+      )
+      .then((response) => {
+        console.log("API Response:", response.data);
+        // Assuming the API response matches the expected format
+        setContacts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching contacts:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // You can show a loading indicator while data is being fetched
+  }
 
   return (
     <Box m="20px">
@@ -68,9 +61,6 @@ const Contacts = () => {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
           "& .MuiDataGrid-columnHeaders": {
             backgroundColor: colors.blueAccent[700],
             borderBottom: "none",
@@ -82,16 +72,10 @@ const Contacts = () => {
             borderTop: "none",
             backgroundColor: colors.blueAccent[700],
           },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={contacts}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

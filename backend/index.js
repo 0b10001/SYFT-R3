@@ -1,5 +1,8 @@
 const Joi = require('joi');
 const express = require('express');
+const cors = require('cors');
+
+
 const app = express();
 
 const path = require('path');
@@ -10,6 +13,8 @@ app.use(express.json());
 
 const apiUrl = 'https://hackathon.syftanalytics.com/api/contacts';
 const apiKey = 'e6506999-8738-4866-a13f-2a2cfb14ba99';
+
+app.use(cors({ origin: "https://friendly-telegram-x55w4rwj77pcpxg6-3000.app.github.dev" }));
 
 // Create an Express route for the GET request
 app.get('/contacts', async (req, res) => {
