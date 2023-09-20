@@ -2,9 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Material UI <https://mui.com/material-ui/getting-started/installation/>
-## FullCalendar <https://fullcalendar.io/docs>
-## Graphs <https://nivo.rocks/pie/>
+### `Material UI <https://mui.com/material-ui/getting-started/installation/>`
+### `FullCalendar <https://fullcalendar.io/docs>`
+### `Graphs <https://nivo.rocks/pie/>`
 
 ## Available Scripts
 
