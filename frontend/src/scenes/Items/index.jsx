@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataItems } from "../../data/mockData";
+import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -70,7 +70,7 @@ const Items = () => {
 
   return (
     <Box m="20px">
-      <Header title="Items" subtitle="Managing the Items Members" />
+      <Header title="Items" subtitle="Managing the Items" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -100,7 +100,7 @@ const Items = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataItems} columns={columns} />
+        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
   );
