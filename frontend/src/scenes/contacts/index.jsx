@@ -27,7 +27,7 @@ const Contacts = () => {
     // Make an API request here to fetch contacts
     axios
       .get(
-        "https://friendly-telegram-x55w4rwj77pcpxg6-3001.app.github.dev/contacts"
+        "https://didactic-sniffle-p44w965vpw43rwg4-3300.app.github.dev/contacts"
       )
       .then((response) => {
         console.log("API Response:", response.data);

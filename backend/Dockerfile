@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port that your Node.js application listens on
-EXPOSE 443
+EXPOSE 3001
 
 # Command to start your backend application
 CMD ["node", "index.js"]

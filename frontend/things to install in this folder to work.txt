@@ -1,0 +1,3 @@
+yarn insall
+docker run -p 3033:3001 frontend
+docker build -t frontend .

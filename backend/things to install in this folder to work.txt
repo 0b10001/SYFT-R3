@@ -1,0 +1,2 @@
+docker build -t backend .
+docker run -p 3300:3001 backend
