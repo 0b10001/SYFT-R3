@@ -13,11 +13,17 @@ app.use(express.json());
 const apiUrl = "https://hackathon.syftanalytics.com/api/contacts";
 const apiKey = "e6506999-8738-4866-a13f-2a2cfb14ba99";
 
-app.use(
-  cors({
-    origin: "https://friendly-telegram-x55w4rwj77pcpxg6-3000.app.github.dev",
-  })
-); //
+// Add CORS middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Change * to the specific origin you want to allow.
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 // Cache for storing multiple item
 const cache = {
