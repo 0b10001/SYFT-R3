@@ -9,8 +9,13 @@ const path = require("path");
 const axios = require("axios");
 
 app.use(express.json());
-
 const apiUrl = "https://hackathon.syftanalytics.com/api/contacts";
+const apiUrlForitem = "https://hackathon.syftanalytics.com/api/item";
+const apiUrlForInvoice = "https://hackathon.syftanalytics.com/api/invoice";
+const apiUrlForInvoiceLines = 'https://hackathon.syftanalytics.com/api/invoice-lines';
+const apiUrlForPayment = 'https://hackathon.syftanalytics.com/api/payment';
+const apiUrlForPaymentAllocations = 'https://hackathon.syftanalytics.com/api/payment-allocations';
+
 const apiKey = "e6506999-8738-4866-a13f-2a2cfb14ba99";
 
 // Add CORS middleware
@@ -86,6 +91,67 @@ app.get("/item", async (req, res) => {
   }
 });
 
+app.get('/invoice', async (req, res) => {
+  try {
+    // Extract query parameters from the request
+    const { id, contactId, startDate, endDate } = req.query;
+
+    // If invoice data is already in the cache, serve it directly
+    if (cache.invoice) {
+      return res.json(cache.invoice);
+    }
+
+    // Construct the query parameters for the GET request
+    const queryParams = {
+      id,
+      contactId,
+      startDate,
+      endDate,
+    };
+
+    // Make the GET request for invoice data using axios and pass the x-api-key in headers
+    const response = await axios.get(apiUrlForInvoice, {
+      headers: {
+        Accept: 'application/json',
+        'x-api-key': apiKey,
+      },
+      params: queryParams, // Pass the query parameters
+    });
+
+    // Store the fetched invoice data in the cache
+    cache.invoice = response.data;
+
+    res.json(cache.invoice);
+  } catch (error) {
+    console.error('Error fetching invoice data:', error);
+    res.status(500).json({ error: 'Error fetching invoice data' });
+  }
+});
+
+app.get('/invoice-lines', async (req, res) => {
+  try {
+    // Extract the 'invoiceId' parameter from the query string
+    const { invoiceId } = req.query;
+
+    // Make the GET request for invoice lines data using axios
+    const response = await axios.get(apiUrlForInvoiceLines, {
+      headers: {
+        Accept: 'application/json',
+        'x-api-key': apiKey,
+      },
+      params: {
+        invoiceId,
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching invoice lines:', error);
+    res.status(500).json({ error: 'Error fetching invoice lines' });
+  }
+});
+
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
@@ -146,6 +212,40 @@ app.post("/api/courses", (req, res) => {
   };
   courses.push(course);
   res.send(course);
+});
+
+app.get('/payment', async (req, res) => {
+  try {
+    const response = await axios.get(apiUrlForPayment, {
+      headers: {
+        Accept: 'application/json',
+        'x-api-key': apiKey, // Replace with your actual API key
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching payment data:', error);
+    res.status(500).json({ error: 'Error fetching payment data' });
+  }
+});
+
+
+
+app.get('/payment-allocations', async (req, res) => {
+  try {
+    const response = await axios.get(apiUrlForPaymentAllocations, {
+      headers: {
+        Accept: 'application/json',
+        'x-api-key': apiKey, // Replace with your actual API key
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching payment data:', error);
+    res.status(500).json({ error: 'Error fetching payment data' });
+  }
 });
 
 app.put("/api/courses/:id", (req, res) => {
