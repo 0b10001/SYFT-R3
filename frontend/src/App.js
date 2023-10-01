@@ -15,6 +15,9 @@ import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import InvoiceLines from "./scenes/invoiceLines";
+import Payments from "./scenes/payment";
+import PaymentAllocations from "./scenes/paymentAllocations";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -31,6 +34,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/Items" element={<Items />} />
+              <Route path="/invoiceLines" element={<InvoiceLines />} />
+              <Route path="/paymentAllocations" element={<PaymentAllocations />} />
+              <Route path="/payment" element={<Payments />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />

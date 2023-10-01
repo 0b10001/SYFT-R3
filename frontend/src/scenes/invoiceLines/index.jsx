@@ -1,61 +1,53 @@
-import { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import { Box, useTheme } from "@mui/material";
-import { DataGrid ,  GridToolbar} from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box, useTheme } from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
 
-const Invoices = () => {
+const InvoiceLines = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "id", headerName: "ID"},
-    { field: "issue_date", headerName: "Issue Date", flex: 1 },
-    { field: "due_date", headerName: "Due Date", flex: 1 },
-    { field: "paid_date", headerName: "Paid Date", flex: 1 },
-    { field: "paid", headerName: "Paid", flex: 1 },
-    { field: "contact_id", headerName: "Contact ID", flex: 1 },
-    { field: "total", headerName: "Total", flex: 1 },
-    { field: "amount_due", headerName: "Amount Due", flex: 1 },
-    { field: "exchange_rate", headerName: "Exchange Rate", flex: 1 },
-    { field: "currency", headerName: "Currency", flex: 1 },
-    { field: "is_sale", headerName: "Is Sale", flex: 1 },
+    { field: 'id', headerName: 'ID' },
+    { field: 'invoice_id', headerName: 'Invoice ID', flex: 1 },
+    { field: 'description', headerName: 'Description', flex: 1 },
+    { field: 'item_code', headerName: 'Item Code', flex: 1 },
+    { field: 'total', headerName: 'Total', flex: 1 },
+    { field: 'quantity', headerName: 'Quantity', flex: 1 },
   ];
 
-  const [invoices, setInvoices] = useState([]);
+  const [invoiceLines, setInvoiceLines] = useState([]);
   const [loading, setLoading] = useState(true);
-  const gridRef = useRef(null);
 
-  console.log("Making API request...");
   useEffect(() => {
-    // Make an API request here to fetch invoices
     axios
       .get(
-        "https://backend-ayp7siwk3a-uc.a.run.app/invoice"
+        `https://backend-ayp7siwk3a-uc.a.run.app/invoice-lines`
       )
       .then((response) => {
-        console.log("API Response:", response.data);
+        console.log('API Response:', response.data);
         // Assuming the API response matches the expected format
         const apiData = response.data.data;
 
-        setInvoices(apiData);
+        setInvoiceLines(apiData);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching invoices:", error);
+        console.error('Error fetching invoice lines:', error);
         setLoading(false);
       });
   }, []);
 
-
   if (loading) {
-    return <div>Loading...</div>; // You can show a loading indicator while data is being fetched
+    return <div>Loading...</div>;
   }
 
+  
   return (
     <Box m="20px">
       <Header
-        title="INVOICES"
+        title="INVOICE LINES"
         subtitle="List of invoices"
       />
       <Box
@@ -92,14 +84,14 @@ const Invoices = () => {
       >
         <DataGrid
           checkboxSelection
-          rows={invoices}
+          rows={invoiceLines}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
-          ref={gridRef}
         />
       </Box>
     </Box>
   );
 };
 
-export default Invoices;
+
+export default InvoiceLines;
